@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="calculatorApp">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CNAT CALCULATOR</title>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
@@ -28,7 +31,7 @@
     .calculator {
       background: rgba(255, 255, 255, 0.05);
       border-radius: 20px;
-      box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.18);
@@ -65,14 +68,16 @@
       min-height: 60px;
     }
 
-    .buttons, .sci-buttons {
+    .buttons,
+    .sci-buttons {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 10px;
       padding: 15px;
     }
 
-    .buttons button, .sci-buttons button {
+    .buttons button,
+    .sci-buttons button {
       padding: 15px;
       font-size: 1.1rem;
       background-color: rgba(255, 255, 255, 0.1);
@@ -83,12 +88,18 @@
       cursor: pointer;
     }
 
-    .buttons button:active, .sci-buttons button:active {
+    .buttons button:active,
+    .sci-buttons button:active {
       background-color: rgba(255, 255, 255, 0.3);
     }
 
-    .operator { background-color: #f57c00; }
-    .operator:active { background-color: #e65100; }
+    .operator {
+      background-color: #f57c00;
+    }
+
+    .operator:active {
+      background-color: #e65100;
+    }
 
     .equal {
       background-color: #4caf50;
@@ -116,13 +127,39 @@
     }
 
     @media (max-width: 400px) {
-      .buttons button, .sci-buttons button {
+
+      .buttons button,
+      .sci-buttons button {
         padding: 12px;
         font-size: 1rem;
       }
     }
+
+    .title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #f1f1f1;
+      letter-spacing: 0.5px;
+      text-align: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      background: none;
+      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    }
+
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 5px #00e5ff, 0 0 10px #00e5ff, 0 0 20px #00e5ff;
+      }
+
+      to {
+        text-shadow: 0 0 10px #ff6ec4, 0 0 20px #ff6ec4, 0 0 30px #ff6ec4;
+      }
+    }
   </style>
 </head>
+
 <body ng-controller="CalculatorController">
   <div class="container">
     <div class="calculator" ng-class="{hidden: isClosed}" ng-keydown="handleKey($event)" tabindex="0">
@@ -178,22 +215,23 @@
     </div>
 
     <div ng-show="isClosed" style="text-align: center; margin-top: 20px;">
-      <button class="close-btn" style="font-size: 1.5rem;" ng-click="isClosed = false">Open CNAT Calculator</button>
+      <button class="close-btn title" style="font-size: 1.5rem;" ng-click="isClosed = false">Open CNAT
+        Calculator</button>
     </div>
   </div>
 
   <script>
     angular.module('calculatorApp', [])
-      .controller('CalculatorController', function($scope, $timeout) {
+      .controller('CalculatorController', function ($scope, $timeout) {
         $scope.expression = '';
         $scope.isClosed = false;
         $scope.showScientific = false;
 
-        $scope.append = function(val) {
+        $scope.append = function (val) {
           $scope.expression += val;
         };
 
-        $scope.calculate = function() {
+        $scope.calculate = function () {
           try {
             $scope.expression = eval($scope.expression).toString();
           } catch {
@@ -201,15 +239,15 @@
           }
         };
 
-        $scope.clear = function() {
+        $scope.clear = function () {
           $scope.expression = '';
         };
 
-        $scope.cut = function() {
+        $scope.cut = function () {
           $scope.expression = $scope.expression.slice(0, -1);
         };
 
-        $scope.handleKey = function(event) {
+        $scope.handleKey = function (event) {
           const key = event.key;
           if (!isNaN(key) || ['+', '-', '*', '/', '%', '.', '(', ')'].includes(key)) {
             $scope.append(key);
@@ -226,4 +264,5 @@
       });
   </script>
 </body>
+
 </html>
